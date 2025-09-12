@@ -1,0 +1,30 @@
+{
+	"name": "ds_sql_current",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_database2503",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sname": {
+				"type": "string"
+			},
+			"tname": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().sname",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tname",
+				"type": "Expression"
+			}
+		}
+	}
+}
