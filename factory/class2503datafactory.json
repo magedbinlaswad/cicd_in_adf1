@@ -1,0 +1,9 @@
+{
+	"name": "class2503datafactory",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "55e1863d-6f4c-47f3-a6fe-3d9a4daf787c",
+		"tenantId": "396b3bd9-5605-4925-ada3-c713f3911f0b"
+	}
+}
