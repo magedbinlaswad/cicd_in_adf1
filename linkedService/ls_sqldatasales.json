@@ -1,0 +1,23 @@
+{
+	"name": "ls_sqldatasales",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "lssqlserver2503.database.windows.net",
+			"database": "mysql2503",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "maged",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "maged"
+			}
+		}
+	}
+}
