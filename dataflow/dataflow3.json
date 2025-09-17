@@ -12,7 +12,15 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_output",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "aggregate1"
@@ -31,7 +39,24 @@
 				"source1 aggregate(groupBy(id),",
 				"     name = last(name),",
 				"          gender = last(gender),",
-				"          salary = last(salary)) ~> aggregate1"
+				"          salary = last(salary)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Sale Key} as string,",
+				"          {Invoice Date Key} as string,",
+				"          {Delivery Date Key} as string,",
+				"          Quantity as string,",
+				"          {Unit Price} as string,",
+				"          {Tax Rate} as string,",
+				"          {Total Excluding Tax} as string,",
+				"          Profit as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
