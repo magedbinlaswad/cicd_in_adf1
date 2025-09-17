@@ -15,6 +15,26 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_database2503'"
 		},
+		"ls_salesdata_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_salesdata'"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keyvaultclass2503.vault.azure.net/"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "mysql2503"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "maged"
+		},
 		"ls_DataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://class2503datalake.dfs.core.windows.net/"
@@ -28,6 +48,22 @@
 			"defaultValue": "mysql2503"
 		},
 		"ls_database2503_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "maged"
+		},
+		"ls_salesdata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"ls_sqldatasales_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "lssqlserver2503.database.windows.net"
+		},
+		"ls_sqldatasales_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "mysql2503"
+		},
+		"ls_sqldatasales_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "maged"
 		},
@@ -64,6 +100,12 @@
 					"ls_database2503_password": {
 						"value": "[parameters('ls_database2503_password')]"
 					},
+					"ls_salesdata_accountKey": {
+						"value": "[parameters('ls_salesdata_accountKey')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
 					"ls_DataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('ls_DataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -75,6 +117,27 @@
 					},
 					"ls_database2503_properties_typeProperties_userName": {
 						"value": "[parameters('ls_database2503_properties_typeProperties_userName')]"
+					},
+					"ls_salesdata_properties_typeProperties_url": {
+						"value": "[parameters('ls_salesdata_properties_typeProperties_url')]"
+					},
+					"AzureSqlkeyvault_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlkeyvault_properties_typeProperties_server')]"
+					},
+					"AzureSqlkeyvault_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlkeyvault_properties_typeProperties_database')]"
+					},
+					"AzureSqlkeyvault_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlkeyvault_properties_typeProperties_userName')]"
+					},
+					"ls_sqldatasales_properties_typeProperties_server": {
+						"value": "[parameters('ls_sqldatasales_properties_typeProperties_server')]"
+					},
+					"ls_sqldatasales_properties_typeProperties_database": {
+						"value": "[parameters('ls_sqldatasales_properties_typeProperties_database')]"
+					},
+					"ls_sqldatasales_properties_typeProperties_userName": {
+						"value": "[parameters('ls_sqldatasales_properties_typeProperties_userName')]"
 					}
 				}
 			},

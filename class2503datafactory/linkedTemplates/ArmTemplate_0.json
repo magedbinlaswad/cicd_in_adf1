@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_database2503'"
 		},
+		"ls_salesdata_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_salesdata'"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://keyvaultclass2503.vault.azure.net/"
+		},
 		"ls_DataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://class2503datalake.dfs.core.windows.net/"
@@ -28,6 +36,34 @@
 			"defaultValue": "mysql2503"
 		},
 		"ls_database2503_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "maged"
+		},
+		"ls_salesdata_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "mysql2503"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "maged"
+		},
+		"ls_sqldatasales_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "lssqlserver2503.database.windows.net"
+		},
+		"ls_sqldatasales_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "mysql2503"
+		},
+		"ls_sqldatasales_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "maged"
 		}
@@ -56,6 +92,19 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
 			},
 			"dependsOn": []
 		},
@@ -99,6 +148,23 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ls_salesdata')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('ls_salesdata_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('ls_salesdata_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_databasedump')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -129,6 +195,111 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_DataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_duplcate')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_DataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "employduplicate.csv",
+						"fileSystem": "urdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "id",
+						"type": "String"
+					},
+					{
+						"name": "name",
+						"type": "String"
+					},
+					{
+						"name": "gender",
+						"type": "String"
+					},
+					{
+						"name": "salary",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_DataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_output')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_DataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "mydata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Sale Key",
+						"type": "String"
+					},
+					{
+						"name": "Invoice Date Key",
+						"type": "String"
+					},
+					{
+						"name": "Delivery Date Key",
+						"type": "String"
+					},
+					{
+						"name": "Quantity",
+						"type": "String"
+					},
+					{
+						"name": "Unit Price",
+						"type": "String"
+					},
+					{
+						"name": "Tax Rate",
+						"type": "String"
+					},
+					{
+						"name": "Total Excluding Tax",
+						"type": "String"
+					},
+					{
+						"name": "Profit",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_DataLakeStorage1')]"
@@ -185,6 +356,63 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ls_database2503')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlkeyvault')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlkeyvault_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlkeyvault_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlkeyvault_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "maged",
+						"secretVersion": "581255dfefbc44868cafb606465e1f11"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ls_sqldatasales')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('ls_sqldatasales_properties_typeProperties_server')]",
+					"database": "[parameters('ls_sqldatasales_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('ls_sqldatasales_properties_typeProperties_userName')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "AzureKeyVault1",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "maged"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureKeyVault1')]"
 			]
 		},
 		{
@@ -320,6 +548,139 @@
 				"[concat(variables('factoryId'), '/datasets/ds_sql')]",
 				"[concat(variables('factoryId'), '/datasets/ds_sql_current')]",
 				"[concat(variables('factoryId'), '/datasets/ds_databasedump')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_duplcate",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_output",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "sort1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as string,",
+						"          name as string,",
+						"          gender as string,",
+						"          salary as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 aggregate(groupBy(id,",
+						"          name,",
+						"          gender,",
+						"          salary),",
+						"     cat = count()) ~> aggregate1",
+						"aggregate1 select(mapColumn(",
+						"          id,",
+						"          name,",
+						"          gender,",
+						"          salary",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sort(asc(id, true)) ~> sort1",
+						"sort1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Sale Key} as string,",
+						"          {Invoice Date Key} as string,",
+						"          {Delivery Date Key} as string,",
+						"          Quantity as string,",
+						"          {Unit Price} as string,",
+						"          {Tax Rate} as string,",
+						"          {Total Excluding Tax} as string,",
+						"          Profit as string",
+						"     ),",
+						"     partitionFileNames:['cleaneddata.csv'],",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_duplcate')]",
+				"[concat(variables('factoryId'), '/datasets/ds_output')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
 			]
 		}
 	]

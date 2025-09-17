@@ -11,6 +11,21 @@
 		"ls_database2503_password": {
 			"value": ""
 		},
+		"ls_salesdata_accountKey": {
+			"value": ""
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://keyvaultclass2503.vault.azure.net/"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_database": {
+			"value": "mysql2503"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_userName": {
+			"value": "maged"
+		},
 		"ls_DataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://class2503datalake.dfs.core.windows.net/"
 		},
@@ -21,6 +36,18 @@
 			"value": "mysql2503"
 		},
 		"ls_database2503_properties_typeProperties_userName": {
+			"value": "maged"
+		},
+		"ls_salesdata_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"ls_sqldatasales_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"ls_sqldatasales_properties_typeProperties_database": {
+			"value": "mysql2503"
+		},
+		"ls_sqldatasales_properties_typeProperties_userName": {
 			"value": "maged"
 		},
 		"containerUri": {
