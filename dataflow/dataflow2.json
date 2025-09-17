@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "dataflow2",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -26,36 +26,24 @@
 					"name": "aggregate1"
 				},
 				{
-					"name": "select1"
-				},
-				{
 					"name": "sort1"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
-				"          id as integer,",
+				"          id as string,",
 				"          name as string,",
 				"          gender as string,",
-				"          salary as integer",
+				"          salary as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 aggregate(groupBy(id,",
-				"          name,",
-				"          gender,",
-				"          salary),",
-				"     cat = count()) ~> aggregate1",
-				"aggregate1 select(mapColumn(",
-				"          id,",
-				"          name,",
-				"          gender,",
-				"          salary",
-				"     ),",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 sort(asc(id, true)) ~> sort1",
+				"source1 aggregate(groupBy(id),",
+				"     name = first(name),",
+				"          gender = first(gender),",
+				"          salary = first(salary)) ~> aggregate1",
+				"aggregate1 sort(asc(id, true)) ~> sort1",
 				"sort1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -68,7 +56,7 @@
 				"          {Total Excluding Tax} as string,",
 				"          Profit as string",
 				"     ),",
-				"     partitionFileNames:['cleaneddata.csv'],",
+				"     partitionFileNames:['groupbyid.csv'],",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
