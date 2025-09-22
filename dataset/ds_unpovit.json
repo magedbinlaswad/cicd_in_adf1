@@ -1,5 +1,5 @@
 {
-	"name": "ds_cleanfilepovit",
+	"name": "ds_unpovit",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_DataLakeStorage1",
@@ -24,15 +24,11 @@
 				"type": "String"
 			},
 			{
-				"name": "name",
+				"name": "Female",
 				"type": "String"
 			},
 			{
-				"name": "gender",
-				"type": "String"
-			},
-			{
-				"name": "salary",
+				"name": "Male",
 				"type": "String"
 			}
 		]

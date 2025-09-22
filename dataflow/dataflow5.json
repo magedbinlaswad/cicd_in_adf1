@@ -1,0 +1,40 @@
+{
+	"name": "dataflow5",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_unpovit",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "unpivot1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          Female as string,",
+				"          Male as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 unpivot(output(",
+				"          Gander as string,",
+				"          gander_cnt as string",
+				"     ),",
+				"     ungroupBy(id),",
+				"     lateral: true,",
+				"     ignoreNullPivots: false) ~> unpivot1"
+			]
+		}
+	}
+}
