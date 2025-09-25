@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "class2503datafactory"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
 		"ls_DataLakeStorage1_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_DataLakeStorage1'"
@@ -15,13 +19,33 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'ls_database2503'"
 		},
+		"ls_datasales_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ls_datasales'"
+		},
 		"ls_salesdata_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ls_salesdata'"
 		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://class2503datalake.dfs.core.windows.net/"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://keyvaultclass2503.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "@{linkedService().db_name}"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "maged"
 		},
 		"AzureSqlkeyvault_properties_typeProperties_server": {
 			"type": "string",
@@ -50,6 +74,10 @@
 		"ls_database2503_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "maged"
+		},
+		"ls_datasales_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://class2503datalake.dfs.core.windows.net/"
 		},
 		"ls_salesdata_properties_typeProperties_url": {
 			"type": "string",
@@ -94,17 +122,35 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
 					"ls_DataLakeStorage1_accountKey": {
 						"value": "[parameters('ls_DataLakeStorage1_accountKey')]"
 					},
 					"ls_database2503_password": {
 						"value": "[parameters('ls_database2503_password')]"
 					},
+					"ls_datasales_accountKey": {
+						"value": "[parameters('ls_datasales_accountKey')]"
+					},
 					"ls_salesdata_accountKey": {
 						"value": "[parameters('ls_salesdata_accountKey')]"
 					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
 					"AzureKeyVault1_properties_typeProperties_baseUrl": {
 						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
 					},
 					"ls_DataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('ls_DataLakeStorage1_properties_typeProperties_url')]"
@@ -117,6 +163,9 @@
 					},
 					"ls_database2503_properties_typeProperties_userName": {
 						"value": "[parameters('ls_database2503_properties_typeProperties_userName')]"
+					},
+					"ls_datasales_properties_typeProperties_url": {
+						"value": "[parameters('ls_datasales_properties_typeProperties_url')]"
 					},
 					"ls_salesdata_properties_typeProperties_url": {
 						"value": "[parameters('ls_salesdata_properties_typeProperties_url')]"
@@ -142,6 +191,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "class2503datafactory_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'class2503datafactory_ArmTemplate_0')]"
+			]
 		}
 	]
 }

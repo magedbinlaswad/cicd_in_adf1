@@ -5,17 +5,35 @@
 		"factoryName": {
 			"value": "class2503datafactory"
 		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
 		"ls_DataLakeStorage1_accountKey": {
 			"value": ""
 		},
 		"ls_database2503_password": {
 			"value": ""
 		},
+		"ls_datasales_accountKey": {
+			"value": ""
+		},
 		"ls_salesdata_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://keyvaultclass2503.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "@{linkedService().db_name}"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "maged"
 		},
 		"AzureSqlkeyvault_properties_typeProperties_server": {
 			"value": "lssqlserver2503.database.windows.net"
@@ -37,6 +55,9 @@
 		},
 		"ls_database2503_properties_typeProperties_userName": {
 			"value": "maged"
+		},
+		"ls_datasales_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
 		},
 		"ls_salesdata_properties_typeProperties_url": {
 			"value": "https://class2503datalake.dfs.core.windows.net/"
