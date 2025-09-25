@@ -1,0 +1,47 @@
+{
+	"name": "ds_cleancross",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "salesdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "2021",
+				"type": "String"
+			},
+			{
+				"name": "5697",
+				"type": "String"
+			},
+			{
+				"name": "2020",
+				"type": "String"
+			},
+			{
+				"name": "5429",
+				"type": "String"
+			},
+			{
+				"name": "4.9 %",
+				"type": "String"
+			},
+			{
+				"name": "Increased",
+				"type": "String"
+			}
+		]
+	}
+}

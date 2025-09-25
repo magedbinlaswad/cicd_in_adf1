@@ -1,0 +1,106 @@
+{
+	"name": "dataflow7",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_crossdata",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_cleancross",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate2"
+				},
+				{
+					"name": "pyear"
+				},
+				{
+					"name": "cyear"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Year as integer,",
+				"          Month as string,",
+				"          Amount as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          Year,",
+				"          Amount",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"sort1 aggregate(groupBy(Year),",
+				"     tot = sum(Amount)) ~> aggregate2",
+				"aggregate2 select(mapColumn(",
+				"          pYear = Year,",
+				"          ptot = tot",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> pyear",
+				"aggregate2 select(mapColumn(",
+				"          cYear = Year,",
+				"          ctot = tot",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> cyear",
+				"cyear, pyear join(cYear - pYear == 1,",
+				"     joinType:'cross',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"select1 sort(asc(Year, true)) ~> sort1",
+				"join1 derive(grate = concat(toString(round(((ctot - ptot) / ptot) * 100, 1)), \" %\")",
+				",",
+				"          Gstate = iif(ctot>ptot, 'Increased', iif(ctot<ptot, 'Decreased', 'NoChange'))",
+				") ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {2021} as string,",
+				"          {5697} as string,",
+				"          {2020} as string,",
+				"          {5429} as string,",
+				"          {4.9 %} as string,",
+				"          Increased as string",
+				"     ),",
+				"     partitionFileNames:['cleancrossdata.csv'],",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
