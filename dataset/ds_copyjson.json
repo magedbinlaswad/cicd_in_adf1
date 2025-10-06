@@ -1,9 +1,14 @@
 {
-	"name": "ds_alldata",
+	"name": "ds_copyjson",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorage1",
 			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
@@ -17,32 +22,10 @@
 				"fileSystem": "urdata"
 			},
 			"columnDelimiter": ",",
-			"rowDelimiter": "\n",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "EmpID",
-				"type": "String"
-			},
-			{
-				"name": "Department",
-				"type": "String"
-			},
-			{
-				"name": "Bonus",
-				"type": "String"
-			},
-			{
-				"name": "Rating",
-				"type": "String"
-			},
-			{
-				"name": "Year",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
