@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "-- إنشاء جدول وسيط بالنصوص فقط\nCREATE TABLE dbo.empt (\n  name          VARCHAR(50),\n  salary        INT,\n  gender        VARCHAR(1),\n  dno           INT\n)\nWITH (DISTRIBUTION = ROUND_ROBIN,\n      HEAP\n);\n\n-- تحميل الملف\nCOPY INTO dbo.empt\nFROM 'https://class2503datalake.blob.core.windows.net/employees/emp1.csv'\nWITH (\n  FILE_TYPE = 'CSV',\n  FIRSTROW = 2\n);\nselect * from dbo.empt;\n\nTRUNCATE TABLE dbo.emps;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "new_class",
+				"poolName": "new_class"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
