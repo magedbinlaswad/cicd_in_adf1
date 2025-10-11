@@ -1,0 +1,84 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synapsmaged765"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"CosmosDbNoSql1_connectionString": {
+			"value": ""
+		},
+		"ls_DataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"ls_database2503_password": {
+			"value": ""
+		},
+		"ls_datasales_accountKey": {
+			"value": ""
+		},
+		"ls_salesdata_accountKey": {
+			"value": ""
+		},
+		"synapsmaged765-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapsmaged765.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://keyvaultclass2503.vault.azure.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "@{linkedService().db_name}"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "maged"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_database": {
+			"value": "mysql2503"
+		},
+		"AzureSqlkeyvault_properties_typeProperties_userName": {
+			"value": "maged"
+		},
+		"ls_DataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"ls_database2503_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"ls_database2503_properties_typeProperties_database": {
+			"value": "mysql2503"
+		},
+		"ls_database2503_properties_typeProperties_userName": {
+			"value": "maged"
+		},
+		"ls_datasales_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"ls_salesdata_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net/"
+		},
+		"ls_sqldatasales_properties_typeProperties_server": {
+			"value": "lssqlserver2503.database.windows.net"
+		},
+		"ls_sqldatasales_properties_typeProperties_database": {
+			"value": "mysql2503"
+		},
+		"ls_sqldatasales_properties_typeProperties_userName": {
+			"value": "maged"
+		},
+		"synapsmaged765-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://class2503datalake.dfs.core.windows.net"
+		}
+	}
+}
